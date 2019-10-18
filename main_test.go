@@ -8,8 +8,8 @@ import (
 	"time"
 )
 
-var(
-	responseMsg=`[
+var (
+	responseMsg = `[
 	{
 		"PlanetIdentifier": "KOI-1843.03",
 		"TypeFlag": 0,
@@ -66,10 +66,10 @@ var(
 
 func Test_getPlanetInHotest(t *testing.T) {
 	tests := []struct {
-		name    string
-		p       []planet
+		name     string
+		p        []planet
 		expected string
-		wantErr bool
+		wantErr  bool
 	}{
 		{
 			name: "Positive Test",
@@ -84,7 +84,7 @@ func Test_getPlanetInHotest(t *testing.T) {
 				},
 			},
 			expected: "AAB 124",
-			wantErr: false,
+			wantErr:  false,
 		},
 		{
 			name: "Negative Test One - Wrong data type",
@@ -107,8 +107,8 @@ func Test_getPlanetInHotest(t *testing.T) {
 			if (err != nil) != tt.wantErr {
 				t.Errorf("getPlanetInHotest() error = %v, wantErr %v", err, tt.wantErr)
 			}
-			if p!=tt.expected{
-				t.Fatalf("Expected = %v | Got = %v",tt.expected,p)
+			if p != tt.expected {
+				t.Fatalf("Expected = %v | Got = %v", tt.expected, p)
 			}
 		})
 	}
@@ -117,22 +117,22 @@ func Test_getPlanetInHotest(t *testing.T) {
 func Test_getNumbetOrfetnPlanet(t *testing.T) {
 	tests := []struct {
 		name        string
-		p       []planet
+		p           []planet
 		wantCounter int
 	}{
 		{
 			name: "Positive Test for one",
 			p: []planet{
 				{
-					PlanetID:      "A1",
+					PlanetID: "A1",
 					TypeFlag: 1,
 				},
 				{
-					PlanetID:      "A2",
+					PlanetID: "A2",
 					TypeFlag: 2,
 				},
 				{
-					PlanetID:      "A3",
+					PlanetID: "A3",
 					TypeFlag: 3,
 				},
 			},
@@ -142,27 +142,27 @@ func Test_getNumbetOrfetnPlanet(t *testing.T) {
 			name: "Positive Test for two",
 			p: []planet{
 				{
-					PlanetID:      "A1",
+					PlanetID: "A1",
 					TypeFlag: 1,
 				},
 				{
-					PlanetID:      "A2",
+					PlanetID: "A2",
 					TypeFlag: 2,
 				},
 				{
-					PlanetID:      "A3",
+					PlanetID: "A3",
 					TypeFlag: 3,
 				},
 				{
-					PlanetID:      "A4",
+					PlanetID: "A4",
 					TypeFlag: 1,
 				},
 				{
-					PlanetID:      "A5",
+					PlanetID: "A5",
 					TypeFlag: 2,
 				},
 				{
-					PlanetID:      "A6",
+					PlanetID: "A6",
 					TypeFlag: 3,
 				},
 			},
@@ -180,22 +180,22 @@ func Test_getNumbetOrfetnPlanet(t *testing.T) {
 
 func Test_getData(t *testing.T) {
 	defer gock.Off()
-	gock.New(":8000").
+	gock.New("http://localhost:8000").
 		Get("/test").
 		Reply(200).
 		JSON(responseMsg)
 	time.Sleep(time.Second)
 	tests := []struct {
 		name    string
-		url string
+		url     string
 		want    []byte
 		wantErr bool
 	}{
 		{
-		name: "Positive Test",
-		url :":8000/test",
-		want:[]byte(responseMsg),
-		wantErr:false,
+			name:    "Positive Test",
+			url:     "http://localhost:8000/test",
+			want:    []byte(responseMsg),
+			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
@@ -215,18 +215,18 @@ func Test_getData(t *testing.T) {
 func Test_getJson(t *testing.T) {
 	tests := []struct {
 		name    string
-		b []byte
+		b       []byte
 		wantErr bool
 	}{
 		{
-			name: "positive test",
-			b:[]byte(responseMsg),
-			wantErr:false,
+			name:    "positive test",
+			b:       []byte(responseMsg),
+			wantErr: false,
 		},
 		{
-			name: "negative test",
-			b:[]byte(responseMsg+"Wrong"),
-			wantErr:true,
+			name:    "negative test",
+			b:       []byte(responseMsg + "Wrong"),
+			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
