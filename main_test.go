@@ -237,3 +237,43 @@ func Test_getJson(t *testing.T) {
 		})
 	}
 }
+
+func Test_groupingPlanets(t *testing.T) {
+	tests := []struct {
+		name            string
+		p               []planet
+		wantGroupPlanet map[int][]int
+		wantErr         bool
+	}{
+		{
+			name: "Positive",
+			p: []planet{
+				{
+					RadiusJpt:     json.Number("0.5"),
+					DiscoveryYear: json.Number("2000"),
+				},
+				{
+					RadiusJpt:     json.Number("1.5"),
+					DiscoveryYear: json.Number("2000"),
+				},
+				{
+					RadiusJpt:     json.Number("2.5"),
+					DiscoveryYear: json.Number("2000"),
+				},
+			},
+			wantGroupPlanet: map[int][]int{2000: {1, 1, 1}},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotGroupPlanet, err := groupingPlanets(tt.p)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("groupingPlanets() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(gotGroupPlanet, tt.wantGroupPlanet) {
+				t.Errorf("groupingPlanets() = %v, want %v", gotGroupPlanet, tt.wantGroupPlanet)
+			}
+		})
+	}
+}
