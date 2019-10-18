@@ -1,5 +1,4 @@
 FROM golang:latest
-ADD . /go/src/github.com/msarajam/projectOne
-WORKDIR /go/src/github.com/msarajam/projectOne
-RUN go install -v
+RUN go install ./... -v
+EXPOSE 8000
 CMD ["./projectOne"]
