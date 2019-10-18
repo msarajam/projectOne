@@ -72,3 +72,14 @@ run ```./projectOne``` for linux
 2019/10/18 09:56:49  in 2015 we discovered 104 small planets, 30 medium planets, and 0 large planets. 
 2019/10/18 09:56:49  in 2016 we discovered 1267 small planets, 26 medium planets, and 0 large planets. 
 ```
+
+### Running test cases :
+```
+go test ./...
+```
+
+to see the coverage
+
+```
+go tool cover -html=coverage.out
+```
