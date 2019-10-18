@@ -6,17 +6,14 @@ this program will make http call to the [server](https://gist.githubusercontent.
 
 after analizing and organazing that JSON file, it will do three task :
 
+* Getting The number of orphan planets (no star).
 
-..* Getting The number of orphan planets (no star).
+* The name (planet identifier) of the planet orbiting the hottest star.
 
-..* The name (planet identifier) of the planet orbiting the hottest star.
-
-..* A timeline of the number of planets discovered per year grouped by size.
-
+* A timeline of the number of planets discovered per year grouped by size.
 
 
-
-### Install Go in MAC :
+### Install Go in MAC and run the project :
 download golang from :
 https://golang.org/dl/
 
@@ -42,7 +39,7 @@ and then Run :
 ```go run ./...```
 
 
-### Or the easy way :
+### Or the easy way for windows and linux :
 
 clone the repo and :
 
