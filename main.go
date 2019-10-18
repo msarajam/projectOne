@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"sort"
 )
 
 var (
@@ -48,8 +49,8 @@ func main() {
 }
 
 // groupingPlanets is for getting the number of planets discovered per year grouped by size
-func groupingPlanets(p []planet) (groupPlanet map[int][]int, err error) {
-	groupPlanet = map[int][]int{}
+func groupingPlanets(p []planet) (map[int][]int, error) {
+	groupPlanet := map[int][]int{}
 	for _, v := range p {
 		if v.RadiusJpt.String() == "" {
 			continue
@@ -92,7 +93,26 @@ func groupingPlanets(p []planet) (groupPlanet map[int][]int, err error) {
 			}
 		}
 	}
-	return groupPlanet, nil
+
+	// this part is for sorting the map
+	// it was not require but it make it easier to read the output
+
+	var pp []int
+	for k, _ := range groupPlanet {
+		pp = append(pp, k)
+	}
+	/*
+		sort.Slice(p, func(i, j int) bool {
+			return pp[i].Value > pp[j].Value
+		})
+	*/
+	sort.Ints(pp)
+	gp := map[int][]int{}
+	for _, v := range pp {
+		gp[v] = groupPlanet[v]
+	}
+
+	return gp, nil
 }
 
 // getPlanetInHotest is for getting of the planet orbiting the hottest star
