@@ -269,11 +269,17 @@ func Test_groupingPlanets(t *testing.T) {
 					RadiusJpt:     json.Number("2.5"),
 					DiscoveryYear: json.Number("2000"),
 				},
+			},
+			wantGroupPlanet: map[int][]int{2000: {1, 1, 1}},
+			},
+		{
+			name: "Positive",
+			p: []planet{
 				{
 					RadiusJpt: json.Number(""),
 				},
 				{
-					RadiusJpt: json.Number(0),
+					RadiusJpt: json.Number("0"),
 				},
 				{
 					RadiusJpt:     json.Number("1"),
@@ -281,22 +287,47 @@ func Test_groupingPlanets(t *testing.T) {
 				},
 				{
 					RadiusJpt:     json.Number("1"),
-					DiscoveryYear: json.Number(0),
+					DiscoveryYear: json.Number("0"),
 				},
 				{
 					RadiusJpt:     json.Number("1.4"),
-					DiscoveryYear: json.Number(2001),
+					DiscoveryYear: json.Number("2001"),
 				},
 				{
 					RadiusJpt:     json.Number("0.4"),
-					DiscoveryYear: json.Number(2001),
+					DiscoveryYear: json.Number("2001"),
 				},
+			},
+			wantGroupPlanet: map[int][]int{2001: {1, 1, 0}},
+		},
+		{
+			name: "Positive",
+			p: []planet{
+				{
+					RadiusJpt:     json.Number("3.4"),
+					DiscoveryYear: json.Number("2002"),
+				},
+			},
+			wantGroupPlanet: map[int][]int{2002: {0, 0, 1}},
+		},
+		{
+			name: "Negative test , wrong value",
+			p: []planet{
 				{
 					RadiusJpt:     json.Number("3.4"),
 					DiscoveryYear: json.Number(2002),
 				},
 			},
-			wantGroupPlanet: map[int][]int{2000: {1, 1, 1}, 2001: {1, 1, 0}, 2002: {0, 0, 1}},
+			wantErr:true,
+		},
+		{
+			name: "Negative test , wrong value",
+			p: []planet{
+				{
+					RadiusJpt:     json.Number(34),
+				},
+			},
+			wantErr:true,
 		},
 	}
 	for _, tt := range tests {
@@ -306,7 +337,7 @@ func Test_groupingPlanets(t *testing.T) {
 				t.Errorf("groupingPlanets() error = %v", err)
 				return
 			}
-			if !reflect.DeepEqual(gotGroupPlanet, tt.wantGroupPlanet) {
+			if !reflect.DeepEqual(gotGroupPlanet, tt.wantGroupPlanet) != tt.wantErr {
 				t.Errorf("groupingPlanets() = %v, want %v", gotGroupPlanet, tt.wantGroupPlanet)
 			}
 		})
