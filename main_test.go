@@ -82,6 +82,10 @@ func Test_getPlanetInHotest(t *testing.T) {
 					PlanetID:      "AAB 124",
 					HostStarTempK: json.Number("50"),
 				},
+				{
+					PlanetID:      "AAC 125",
+					HostStarTempK: json.Number(""),
+				},
 			},
 			expected: "AAB 124",
 			wantErr:  false,
@@ -114,7 +118,7 @@ func Test_getPlanetInHotest(t *testing.T) {
 	}
 }
 
-func Test_getNumbetOrfetnPlanet(t *testing.T) {
+func Test_getNumberOfPlanet(t *testing.T) {
 	tests := []struct {
 		name        string
 		p           []planet
@@ -171,7 +175,7 @@ func Test_getNumbetOrfetnPlanet(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if gotCounter := getNumbetOrfetnPlanet(tt.p); gotCounter != tt.wantCounter {
+			if gotCounter := getNumberOfPlanet(tt.p); gotCounter != tt.wantCounter {
 				t.Errorf("getNumbetOrfetnPlanet() = %v, want %v", gotCounter, tt.wantCounter)
 			}
 		})
@@ -196,6 +200,11 @@ func Test_getData(t *testing.T) {
 			url:     "http://localhost:8000/test",
 			want:    []byte(responseMsg),
 			wantErr: false,
+		},
+		{
+			name:    "Negative Tese , wrong url",
+			url:     "testest",
+			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
@@ -260,15 +269,41 @@ func Test_groupingPlanets(t *testing.T) {
 					RadiusJpt:     json.Number("2.5"),
 					DiscoveryYear: json.Number("2000"),
 				},
+				{
+					RadiusJpt: json.Number(""),
+				},
+				{
+					RadiusJpt: json.Number(0),
+				},
+				{
+					RadiusJpt:     json.Number("1"),
+					DiscoveryYear: json.Number(""),
+				},
+				{
+					RadiusJpt:     json.Number("1"),
+					DiscoveryYear: json.Number(0),
+				},
+				{
+					RadiusJpt:     json.Number("1.4"),
+					DiscoveryYear: json.Number(2001),
+				},
+				{
+					RadiusJpt:     json.Number("0.4"),
+					DiscoveryYear: json.Number(2001),
+				},
+				{
+					RadiusJpt:     json.Number("3.4"),
+					DiscoveryYear: json.Number(2002),
+				},
 			},
-			wantGroupPlanet: map[int][]int{2000: {1, 1, 1}},
+			wantGroupPlanet: map[int][]int{2000: {1, 1, 1}, 2001: {1, 1, 0}, 2002: {0, 0, 1}},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			gotGroupPlanet, err := groupingPlanets(tt.p)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("groupingPlanets() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("groupingPlanets() error = %v", err)
 				return
 			}
 			if !reflect.DeepEqual(gotGroupPlanet, tt.wantGroupPlanet) {

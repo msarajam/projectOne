@@ -26,7 +26,7 @@ func main() {
 	}
 
 	// First part of the assignment
-	np := getNumbetOrfetnPlanet(Planets)
+	np := getNumberOfPlanet(Planets)
 	log.Println("Number of orphan planets (no star) : ", np)
 
 	// Second part of the assignment
@@ -114,7 +114,7 @@ func getPlanetInHotest(p []planet) (string, error) {
 }
 
 // getNumbetOrfetnPlanet is getting the total number of orphan planets (no star)
-func getNumbetOrfetnPlanet(p []planet) (counter int) {
+func getNumberOfPlanet(p []planet) (counter int) {
 	for _, v := range p {
 		if v.TypeFlag == 3 {
 			counter++
@@ -146,4 +146,3 @@ func getJson(b []byte) error {
 	}
 	return nil
 }
-
