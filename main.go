@@ -49,7 +49,7 @@ func main() {
 	}
 	sort.Ints(gpSort)
 	for _, v := range gpSort {
-		log.Printf(" in %d we discovered %d small planets, %d medium planets, and %d large planets. ", v, gp[v][0], gp[v][1], gp[v][2])
+		log.Printf("In %d we discovered %d small planets, %d medium planets, and %d large planets. ", v, gp[v][0], gp[v][1], gp[v][2])
 	}
 }
 
