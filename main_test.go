@@ -271,7 +271,7 @@ func Test_groupingPlanets(t *testing.T) {
 				},
 			},
 			wantGroupPlanet: map[int][]int{2000: {1, 1, 1}},
-			},
+		},
 		{
 			name: "Positive",
 			p: []planet{
@@ -318,16 +318,16 @@ func Test_groupingPlanets(t *testing.T) {
 					DiscoveryYear: json.Number(2002),
 				},
 			},
-			wantErr:true,
+			wantErr: true,
 		},
 		{
 			name: "Negative test , wrong value",
 			p: []planet{
 				{
-					RadiusJpt:     json.Number(34),
+					RadiusJpt: json.Number(34),
 				},
 			},
-			wantErr:true,
+			wantErr: true,
 		},
 	}
 	for _, tt := range tests {

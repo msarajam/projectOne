@@ -30,4 +30,5 @@ type planet struct {
 	ListsPlanetIsOn      json.Number `json:"ListsPlanetIsOn"`
 }
 
+// Planets is the list of all the planets
 var Planets []planet

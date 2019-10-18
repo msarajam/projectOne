@@ -43,8 +43,13 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	for k, v := range gp {
-		log.Printf(" in %d we discovered %d small planets, %d medium planets, and %d large planets. ", k, v[0], v[1], v[2])
+	gpSort := make([]int, 0, len(gp))
+	for k := range gp {
+		gpSort = append(gpSort, k)
+	}
+	sort.Ints(gpSort)
+	for _, v := range gpSort {
+		log.Printf(" in %d we discovered %d small planets, %d medium planets, and %d large planets. ", v, gp[v][0], gp[v][1], gp[v][2])
 	}
 }
 
@@ -93,26 +98,7 @@ func groupingPlanets(p []planet) (map[int][]int, error) {
 			}
 		}
 	}
-
-	// this part is for sorting the map
-	// it was not require but it make it easier to read the output
-
-	var pp []int
-	for k, _ := range groupPlanet {
-		pp = append(pp, k)
-	}
-	/*
-		sort.Slice(p, func(i, j int) bool {
-			return pp[i].Value > pp[j].Value
-		})
-	*/
-	sort.Ints(pp)
-	gp := map[int][]int{}
-	for _, v := range pp {
-		gp[v] = groupPlanet[v]
-	}
-
-	return gp, nil
+	return groupPlanet, nil
 }
 
 // getPlanetInHotest is for getting of the planet orbiting the hottest star
