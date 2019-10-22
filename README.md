@@ -83,3 +83,15 @@ to see the coverage
 ```
 go tool cover -html=coverage.out
 ```
+
+### Running with Docker :
+clone the repo
+run 
+```
+docker build -t projectone .  
+```
+to build the image in docker 
+then run 
+```
+docker run -it projectone
+```
