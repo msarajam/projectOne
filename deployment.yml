@@ -1,0 +1,19 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+        name: projectone
+spec:
+        replicas: 2
+        selector:
+                matchLabel:
+                        name: projectone
+                template:
+                        metadata:
+                                label:
+                                        name: projectone
+                        spec:
+                                containers:
+                                -name: application
+                                image: msarajam/projectone
+                                imagePullPolicy: IfNotPresent
